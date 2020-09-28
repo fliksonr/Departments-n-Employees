@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use phpDocumentor\Reflection\Types\This;
 use Yii;
 
 /**
@@ -43,6 +44,8 @@ class Employee extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
+        
+
         return [
             'id' => 'ID',
             'first_name' => 'First Name',
@@ -61,5 +64,14 @@ class Employee extends \yii\db\ActiveRecord
     public function getEmployeesDepartments()
     {
         return $this->hasMany(EmployeesDepartments::className(), ['employee_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDepartments()
+    {
+        return $this->hasMany(Department::className(),['id' => 'department_id'])
+            ->viaTable('employees_departments', ['employee_id' => 'id']);
     }
 }

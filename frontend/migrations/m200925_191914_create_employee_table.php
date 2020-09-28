@@ -12,6 +12,11 @@ class m200925_191914_create_employee_table extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%employee}}', [
             'id' => $this->primaryKey(),
             'first_name' => $this->string()->notNull(),
@@ -20,7 +25,7 @@ class m200925_191914_create_employee_table extends Migration
             'gender' => $this->string(),
             'salary' => $this->integer()->notNull()
 
-        ]);
+        ], $tableOptions);
     }
 
     /**

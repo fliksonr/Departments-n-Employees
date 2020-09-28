@@ -12,11 +12,16 @@ class m200925_192909_create_employees_departments_table extends Migration
      */
     public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+        }
+
         $this->createTable('{{%employees_departments}}', [
             'id' => $this->primaryKey(),
             'employee_id' => $this->integer()->notNull(),
             'department_id' => $this->integer()->notNull()
-        ]);
+        ], $tableOptions);
 
         $this->addForeignKey(
             'fk-emp-dep-emp_id',

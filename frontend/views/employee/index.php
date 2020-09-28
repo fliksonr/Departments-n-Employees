@@ -24,13 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'first_name',
             'last_name',
-            'middle_name',
-            'gender',
             'salary',
-
+            [
+                'label' => 'Отделы',
+                'value' => function($model){
+                    $departments = '';
+                    foreach ($model->departments as $key => $value){
+                        if ($key != 0) {
+                            $departments .= ', ';
+                        }
+                        $departments .= $value['name'];
+                    }
+                    return $departments;
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

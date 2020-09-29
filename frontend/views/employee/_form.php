@@ -31,18 +31,8 @@ use yii\bootstrap4\Modal;
 
     <?= $form->field($model, 'salary')->textInput() ?>
 
-<!--    <label>Departments</label>-->
         <?=
-//         Select2::widget([
-//            'name' => 'CLASSIC (Multiple)',
-//            'model' => $model_departments,
-//            'data' => $items,
-//            'theme' => Select2::THEME_MATERIAL,
-//            'options' => ['placeholder' => 'Select a state ...', 'multiple' => true, 'autocomplete' => 'off'],
-//            'pluginOptions' => [
-//                'allowClear' => true
-//            ],
-//        ]);
+//
          $form->field($model_departments, 'departments')->widget(Select2::classname(), [
             'name' => 'CLASSIC (Multiple)',
             'data' => $items,

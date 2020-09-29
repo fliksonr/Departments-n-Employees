@@ -9,6 +9,13 @@ use yii\widgets\Pjax;
 $this->title = 'Departments';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php if (Yii::$app->session->hasFlash('error')): ?>
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <h4><i class="icon fa fa-exclamation"></i>Ошибка</h4>
+        <?= Yii::$app->session->getFlash('error') ?>
+    </div>
+<?php endif; ?>
 <div class="department-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

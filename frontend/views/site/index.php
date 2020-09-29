@@ -3,9 +3,15 @@
 /** @var $this yii\web\View
  * @var $departments
  * @var $employees
+ * @var $items
+ * @var $dataProvider
+ *
  */
 
-$this->title = 'My Yii Application';
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+
+$this->title = 'Deps-n-Emps';
 ?>
 
 <div class="col-8  col-12-narrower imp-narrower">
@@ -52,9 +58,6 @@ $this->title = 'My Yii Application';
             <?php endforeach; ?>
             </tbody>
         </table>
-
-
-
     </div>
 </div>
 

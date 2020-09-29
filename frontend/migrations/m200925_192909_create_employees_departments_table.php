@@ -29,7 +29,7 @@ class m200925_192909_create_employees_departments_table extends Migration
             'employee_id',
             'employee',
             'id',
-            'RESTRICT'
+            'CASCADE'
         );
 
         $this->addForeignKey(

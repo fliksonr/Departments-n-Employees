@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Department;
 use yii\data\ActiveDataProvider;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -104,8 +105,13 @@ class DepartmentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        try {
+            $this->findModel($id)->delete();
+        }catch (Exception $e) {
+                Yii::$app->session->setFlash(
+                    'error',
+                    "Ошибка удаления. Вероятно в отделе еще остались сотрудники. ");
+        }
         return $this->redirect(['index']);
     }
 

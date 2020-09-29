@@ -2,10 +2,10 @@
 
 namespace frontend\controllers;
 
-use app\models\EmployeesDepartments;
 use Yii;
 use app\models\Employee;
 use app\models\Department;
+use app\models\EmployeesDepartments;
 use app\models\DepartmentsList;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
@@ -45,9 +45,7 @@ class EmployeeController extends Controller
         $departments = Department::find()->all();
         // формируем массив, с ключем равным полю 'id' и значением равным полю 'name'
         $items = ArrayHelper::map($departments,'id','name');
-        $params = [
-            'multiple' => 'true'
-        ];
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => Employee::find()->with('employeesDepartments'),
@@ -58,7 +56,6 @@ class EmployeeController extends Controller
             'md_worker' => $model,
             'md_all_departments' => $model_departments,
             'items' => $items,
-            'params' => $params,
         ]);
     }
 
@@ -97,7 +94,9 @@ class EmployeeController extends Controller
                         $model_relation->department_id = $value;
                         $model_relation->save();
                     }
-                    header("Refresh:0");
+                    return $this->render('view', [
+                        'model' => $this->findModel($employee_id),
+                    ]);
                 } else {
                     return false;
                 }
@@ -139,7 +138,9 @@ class EmployeeController extends Controller
                         $model_relation->department_id = $value;
                         $model_relation->save();
                     }
-                    header("Refresh:0");
+                    return $this->render('view', [
+                        'model' => $this->findModel($id),
+                    ]);
                 } else {
                     return false;
                 }

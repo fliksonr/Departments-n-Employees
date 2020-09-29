@@ -3,10 +3,13 @@ namespace frontend\controllers;
 
 use app\models\Employee;
 use app\models\Department;
+use app\models\EmployeesDepartments;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -79,11 +82,21 @@ class SiteController extends Controller
         $department_model = new Department();
         $employee_model = new Employee();
         $departments = $department_model->find()->all();
-        $employee = $employee_model->find()->all();
+        $employees = $employee_model->find()->all();
+
+        $departments = Department::find()->all();
+        // формируем массив, с ключем равным полю 'id' и значением равным полю 'name'
+        $items = ArrayHelper::map($departments,'id','name');
+        $items = array_push($items,['first_name,last_name']);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Employee::find()->with('employeesDepartments'),
+        ]);
 
         return $this->render('index',[
+            'employees' => $employees,
             'departments' => $departments,
-            'employees' => $employee,
+            'dataProvider' => $dataProvider,
+            'items' => $items
         ]);
     }
 

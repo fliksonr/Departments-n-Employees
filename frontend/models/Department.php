@@ -53,4 +53,9 @@ class Department extends \yii\db\ActiveRecord
     {
         return $this->hasMany(EmployeesDepartments::className(), ['department_id' => 'id']);
     }
+
+    public function getEmployees()
+    {
+        return $this->hasMany(Employee::className(), ['id' => 'employee_id'])->viaTable('employees_departments', ['department_id' => 'id']);
+    }
 }

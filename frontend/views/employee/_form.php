@@ -24,7 +24,10 @@ use yii\bootstrap4\Modal;
 
     <?= $form->field($model, 'middle_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'gender')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'gender')->dropDownList([
+       'Мужской' => 'М',
+       'Женский' => 'Ж',
+    ]) ?>
 
     <?= $form->field($model, 'salary')->textInput() ?>
 

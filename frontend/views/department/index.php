@@ -26,6 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
 //            'id',
             'name',
+            [
+                'label' => 'Employees in department',
+                'value' => function($model){
+                    return count($model->employees);
+                }
+            ],
+            [
+                'label' => 'Biggest salary',
+                'value' => function($model){
+                    $max = 0;
+                    foreach ($model->employees as $key => $value){
+                        if ($value['salary']>$max){
+                            $max = $value['salary'];
+                        }
+                    }
+                    return $max;
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

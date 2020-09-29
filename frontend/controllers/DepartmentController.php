@@ -36,7 +36,7 @@ class DepartmentController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Department::find(),
+            'query' => Department::find()->with('employees'),
         ]);
 
         return $this->render('index', [

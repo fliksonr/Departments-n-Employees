@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use app\models\Employee;
+use app\models\Department;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -74,8 +76,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $department_model = new Department();
+        $employee_model = new Employee();
+        $departments = $department_model->find()->all();
+        $employee = $employee_model->find()->all();
 
-        return $this->render('index');
+        return $this->render('index',[
+            'departments' => $departments,
+            'employees' => $employee,
+        ]);
     }
 
     /**

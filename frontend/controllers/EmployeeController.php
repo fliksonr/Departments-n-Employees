@@ -87,7 +87,7 @@ class EmployeeController extends Controller
         $departments = Department::find()->all();
         $items = ArrayHelper::map($departments,'id','name');
 
-        if(\Yii::$app->request->isAjax) {
+
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $employee_id = $model->id;
                 if ($model_departments->load(Yii::$app->request->post())) {
@@ -97,21 +97,18 @@ class EmployeeController extends Controller
                         $model_relation->department_id = $value;
                         $model_relation->save();
                     }
-                    return true;
+                    header("Refresh:0");
                 } else {
                     return false;
                 }
             } else {
-                return false;
+                return $this->render('create', [
+                    'model' => $model,
+                    'model_departments' => $model_departments,
+                    'items' => $items,
+                ]);
             }
         }
-
-        return $this->render('create', [
-            'model' => $model,
-            'model_departments' => $model_departments,
-            'items' => $items,
-        ]);
-    }
 
     /**
      * Updates an existing Employee model.
@@ -131,34 +128,28 @@ class EmployeeController extends Controller
 
         $model = $this->findModel($id);
 
-        if(\Yii::$app->request->isAjax){
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 if ($model_departments->load(Yii::$app->request->post())) {
-    //                EmployeesDepartments::deleteAll([
-    //                    'employee_id' => $id,
-    //                ]);
+                    EmployeesDepartments::deleteAll([
+                        'employee_id' => $id,
+                    ]);
                     foreach ($model_departments->departments as $key => $value){
                         $model_relation = new EmployeesDepartments();
                         $model_relation->employee_id =$id;
                         $model_relation->department_id = $value;
                         $model_relation->save();
                     }
-                    return true;
+                    header("Refresh:0");
                 } else {
                     return false;
                 }
             } else {
-               return false;
+                return $this->render('update', [
+                    'model' => $model,
+                    'model_departments' => $model_departments,
+                    'items' => $items,
+                ]);
             }
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-            'model_departments' => $model_departments,
-            'items' => $items,
-        ]);
-
-
     }
 
     /**
